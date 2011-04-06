@@ -1106,7 +1106,11 @@ function! s:curl_curl(url, login, proxy, proxylogin, parms)
     let error = ""
     let output = ""
 
-    let curlcmd = "curl -s -S "
+    if exists('g:twitvim_socks4a_proxy')
+      let curlcmd = "curl --socks4a ".g:twitvim_socks4a_proxy." -s -S "
+    else
+      let curlcmd = "curl -s -S "
+    endif
 
     if s:get_twitvim_cert_insecure()
 	let curlcmd .= "-k "
